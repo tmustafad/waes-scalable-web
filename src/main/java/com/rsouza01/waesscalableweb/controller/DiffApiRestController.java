@@ -1,8 +1,5 @@
 package com.rsouza01.waesscalableweb.controller;
 
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 @Api(value = "Computes differences between base-64 data")
 @RestController
@@ -70,6 +68,7 @@ public class DiffApiRestController {
 		}
     }
 
+	
 	@ApiOperation(value = "Endpoint that gets the differences between two panels identified by an Id")
     @RequestMapping(value="{id}", method = RequestMethod.GET)
     public ResponseEntity<String> difference(@PathVariable final String id) {

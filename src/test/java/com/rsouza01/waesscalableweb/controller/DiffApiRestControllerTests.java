@@ -1,8 +1,5 @@
 package com.rsouza01.waesscalableweb.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,8 +25,6 @@ import com.rsouza01.waesscalableweb.service.DataDiffService;
 @WebMvcTest(DiffApiRestController.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DiffApiRestControllerTests {
-
-	private Logger logger = LoggerFactory.getLogger(DiffApiRestControllerTests.class);
 
 	@Autowired
 	private MockMvc mockMvc;
