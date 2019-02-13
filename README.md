@@ -30,4 +30,10 @@ We evaluate the assignment depending on your role (Developer/Tester) and your le
 - Suggestions for improvement
 
 Please	upload	the	assignment	on	your	personal	GitHub	account	once	finished,	and	send	the	link	to	the	
-responsible	Tech	Sourcer before	deadline.	
+responsible	Tech	Sourcer before	deadline.
+
+
+## Project Info
+
+Swagger documentation: http://localhost:8080/swagger-ui.html
+H2 Console: http://localhost:8080/h2-console
