@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rsouza01.waesscalableweb.enums.PanelSide;
+import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
 import com.rsouza01.waesscalableweb.model.DataDifferenceEntry;
 import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
 import com.rsouza01.waesscalableweb.repository.DataDifferenceEntryRepository;
+
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +39,20 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 	
 
 	@Override
-	public DataDifferenceResult difference(String id) {
+	public DataDifferenceResult difference(String transactionId) throws TransactionNotFoundException {
 		
 		final String logMessage = "Transaction %s: Difference requested.";
 		
-		logger.debug(String.format(logMessage, id));
+		logger.debug(String.format(logMessage, transactionId));
+		
+		List<DataDifferenceEntry> entries = dataDifferenceEntryRepository.findByTransactionId(transactionId);
 
-		return null;
+		if(entries.size() < 2) {
+			throw new TransactionNotFoundException(
+					String.format("Two panels are needed (%s found).", entries.size()));
+		}
+		
+		
+		return new DataDifferenceResult();
 	}
 }

@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "69e4d320-bf42-48bc-bf28-d7b4337aaff5",
+		"name": "WAES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Left",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"DIFF REQUEST LEFT\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/diff/1/left",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"diff",
+						"1",
+						"left"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Right",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"DIFF REQUEST RIGHT\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/diff/1/right",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"diff",
+						"1",
+						"right"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Difference",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/diff/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"diff",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

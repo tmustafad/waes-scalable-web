@@ -1,11 +1,12 @@
 package com.rsouza01.waesscalableweb.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@AllArgsConstructor
+@AllArgsConstructor @Getter
 public enum PanelSide {
-	LEFT(0), 
-	RIGHT(1);
+	LEFT("left"), 
+	RIGHT("right");
 
-	public int panelSide;
+	private String panelSide;
 }

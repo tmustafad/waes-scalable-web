@@ -11,5 +11,6 @@ public class DifferenceResponse {
     private String status;
 
     private String message;
-
+    
+	private String[] differences;
 }
