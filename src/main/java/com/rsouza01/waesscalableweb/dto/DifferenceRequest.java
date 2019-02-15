@@ -13,6 +13,6 @@ public class DifferenceRequest {
 
 	@NotNull
 	@Size(min=1, message="The content must be provided")
-    private String content;
+    private String base64Content;
 
 }

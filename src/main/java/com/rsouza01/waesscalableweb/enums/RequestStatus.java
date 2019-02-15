@@ -4,7 +4,5 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor @Getter
-public enum PanelSide {
-	left, 
-	right;
+public enum RequestStatus {
 }

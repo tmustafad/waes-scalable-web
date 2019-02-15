@@ -4,6 +4,7 @@
 package com.rsouza01.waesscalableweb.exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.http.HttpStatus;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus;
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class TransactionNotFoundException extends RuntimeException {
-
+	
 	/**
 	 * 
 	 */
@@ -21,8 +22,8 @@ public class TransactionNotFoundException extends RuntimeException {
 	/**
 	 * @param arg0
 	 */
-	public TransactionNotFoundException(String arg0) {
-		super(arg0);
+	public TransactionNotFoundException(String message) {
+		super(message);
 	}
 
 	

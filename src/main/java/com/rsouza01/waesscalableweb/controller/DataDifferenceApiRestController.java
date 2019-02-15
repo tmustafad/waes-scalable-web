@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rsouza01.waesscalableweb.dto.DifferenceRequest;
 import com.rsouza01.waesscalableweb.dto.DifferenceResponse;
 import com.rsouza01.waesscalableweb.enums.PanelSide;
-import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
 import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
 import com.rsouza01.waesscalableweb.service.DataDifferenceService;
 
@@ -34,63 +33,51 @@ public class DataDifferenceApiRestController {
 	@Autowired
 	private DataDifferenceService service;
 
-	@ApiOperation(value = "Endpoint that uploads a content for the left panel")
-	@RequestMapping(value = "{transactionId}/left", method = RequestMethod.POST)
-	public ResponseEntity<String> leftUpload(@PathVariable final String transactionId,
-			@Valid @RequestBody final DifferenceRequest diffRequest) {
+	public static final String contentUploadLogMessage = "Transaction %s: %s panel upload: %s";
+	public static final String contentUploadErrorlogMessage = "Error for Transaction %s: %s panel upload: %s";
+	public static final String differencelogMessage = "Transaction %s: Difference requested.";
+	
 
-		final String logMessage = "Transaction %s: Left panel upload: %s";
+	@ApiOperation(value = "Endpoint that uploads content for a specified side.")
+	@RequestMapping(value = "{transactionId}/{panelSide}", method = RequestMethod.POST)
+	public ResponseEntity<String> contentUpload(
+			@PathVariable(value = "transactionId") final String transactionId,
+			@PathVariable(value = "panelSide") final PanelSide panelSide,
+			@Valid @RequestBody final DifferenceRequest diffRequest) {
 
 		try {
 
-			logger.debug(String.format(logMessage, transactionId, diffRequest.getContent()));
+			logger.info(String.format(contentUploadLogMessage, transactionId, panelSide, diffRequest.getBase64Content()));
 
-			service.inputData(transactionId, PanelSide.LEFT, diffRequest.getContent());
+			service.inputData(transactionId, panelSide, diffRequest.getBase64Content());
 
-			return new ResponseEntity<String>("OK", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 
 		} catch (Exception e) {
-			return new ResponseEntity<String>("", HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error(
+					String.format(contentUploadErrorlogMessage, transactionId, panelSide, diffRequest.getBase64Content()), 
+					e);
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@ApiOperation(value = "Endpoint that uploads a content for the right panel")
-	@RequestMapping(value = "{transactionId}/right", method = RequestMethod.POST)
-	public ResponseEntity<String> rightUpload(@PathVariable final String transactionId,
-			@Valid @RequestBody final DifferenceRequest diffRequest) {
-
-		final String logMessage = "Transaction %s: Right panel upload: %s";
-
-		try {
-
-			logger.debug(String.format(logMessage, transactionId, diffRequest.getContent()));
-
-			service.inputData(transactionId, PanelSide.RIGHT, diffRequest.getContent());
-
-			return new ResponseEntity<String>("OK", HttpStatus.OK);
-
-		} catch (Exception e) {
-			return new ResponseEntity<String>("", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@ApiOperation(value = "Endpoint that gets the differences between two panels identified by an Id")
+	@ApiOperation(value = "Endpoint that gets the differences between two panels identified by a transaction id")
 	@RequestMapping(value = "{transactionId}", method = RequestMethod.GET)
 	public ResponseEntity<DifferenceResponse> difference(@PathVariable final String transactionId) {
-
-		final String logMessage = "Transaction %s: Difference requested.";
-
-		logger.debug(String.format(logMessage, transactionId));
-
+		
+		logger.info(String.format(differencelogMessage, transactionId));
+	
 		DataDifferenceResult dataDifferenceResult = service.difference(transactionId);
 		
 		DifferenceResponse differenceResponse = new DifferenceResponse("NOK", "", null);
 		
 		if(dataDifferenceResult != null) {
 			differenceResponse = new DifferenceResponse("OK", "Differences found", dataDifferenceResult.getDifferences());
+		} else {
+			differenceResponse = new DifferenceResponse("OK", "No Differences found", null);
 		}
 
 		return new ResponseEntity<DifferenceResponse>(differenceResponse, HttpStatus.OK);
-
 	}
 }

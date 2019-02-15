@@ -34,7 +34,7 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 
 		final String logMessage = "Transaction %s: InputData: %s";
 		
-		logger.debug(String.format(logMessage, dataDifferenceEntry.getId(), dataDifferenceEntry.getContent()));
+		logger.info(String.format(logMessage, dataDifferenceEntry.getId(), dataDifferenceEntry.getContent()));
 	}	
 	
 
@@ -43,7 +43,7 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 		
 		final String logMessage = "Transaction %s: Difference requested.";
 		
-		logger.debug(String.format(logMessage, transactionId));
+		logger.info(String.format(logMessage, transactionId));
 		
 		List<DataDifferenceEntry> entries = dataDifferenceEntryRepository.findByTransactionId(transactionId);
 
