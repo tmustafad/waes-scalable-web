@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.rsouza01.waesscalableweb.WaesScalableWebApplicationConstants;
 import com.rsouza01.waesscalableweb.enums.PanelSide;
 import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
@@ -38,12 +39,6 @@ public class DiffApiRestControllerTests {
 	private static final String DIFFERENCE_GET_ENDPOINT = "/v1/diff/{id}";
 	private static final String CONTENT_POST_ENDPOINT 	= "/v1/diff/{id}/{panel}";
 
-	private static final String JSON_DIFF_REQUEST 		= "{\"base64Content\":\"%s\"}";
-	
-	private static final String JSON_STRING_1 = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
-	private static final String JSON_STRING_2 = "{ \"name\":\"John\", \"age\":30, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\", \"car3\":\"Fiat\" } }";
-	private static final String JSON_STRING_3 = "{ \"name\":\"Ana\", \"age\":40, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\" } }";
-	
 	/**
 	 * Test method for the incomplete cycle request 
 	 * (i.e. only one panel uploaded before the difference endpoint be called)
@@ -59,7 +54,7 @@ public class DiffApiRestControllerTests {
 	    		.thenThrow(new TransactionIncompleteException("Two panels are needed (1 found)."));
 
 	    	String encodedString = 
-	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_1.getBytes()));
+	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 
 			content_post_request(transactionId, 
 					encodedString,
@@ -89,7 +84,7 @@ public class DiffApiRestControllerTests {
     		.thenReturn(null);
 
 	    	String encodedString = 
-	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_1.getBytes()));
+	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 	    	
 			content_post_request(transactionId, 
 					encodedString,
@@ -123,10 +118,10 @@ public class DiffApiRestControllerTests {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 
 	    	String encodedStringLeft = 
-	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_2.getBytes()));
+	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_2.getBytes()));
 
 	    	String encodedStringRight = 
-	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_3.getBytes()));
+	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_3.getBytes()));
 	    	
 	    	when(service.difference(String.valueOf(transactionId)))
     		.thenReturn(new DataDifferenceResult());

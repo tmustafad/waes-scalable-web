@@ -16,15 +16,22 @@ import com.rsouza01.waesscalableweb.enums.JsonContentsResult;
 @Getter
 public class JsonContentsComparison {
 	
+	private JsonContentsResult result;
+	
+	private List<JsonObjectDifference> leftDifferences = new ArrayList<>();
+	private List<JsonObjectDifference> rightDifferences = new ArrayList<>();
+
 	public JsonContentsComparison(JsonContentsResult result) {
 		this.result = result; 
 	}
 	
-	private JsonContentsResult result;
+	public JsonContentsComparison(JsonContentsResult result, List<JsonObjectDifference> leftDifferences, List<JsonObjectDifference> rightDifferences) {
+		this.result = result; 
+		this.leftDifferences = leftDifferences; 
+		this.rightDifferences = rightDifferences; 
+	}
 	
-	private List<String> differences = new ArrayList<>();
-
 	public boolean hasDifferences() {
-		return differences.size() > 0;
+		return (leftDifferences.size() + rightDifferences.size()) > 0;
 	}
 }

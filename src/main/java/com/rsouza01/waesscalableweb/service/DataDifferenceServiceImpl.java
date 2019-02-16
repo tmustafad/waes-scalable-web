@@ -12,7 +12,6 @@ import com.rsouza01.waesscalableweb.repository.DataDifferenceEntryRepository;
 import com.rsouza01.waesscalableweb.util.json.JsonContentsComparator;
 
 import java.util.Base64;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
