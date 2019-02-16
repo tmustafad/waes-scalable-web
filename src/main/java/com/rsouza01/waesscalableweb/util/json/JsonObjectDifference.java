@@ -3,10 +3,8 @@
  */
 package com.rsouza01.waesscalableweb.util.json;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.rsouza01.waesscalableweb.enums.JsonObjectDifferenceType;
@@ -14,11 +12,9 @@ import com.rsouza01.waesscalableweb.enums.JsonObjectDifferenceType;
  * @author rsouza
  *
  */
-@Getter @Setter
+@NoArgsConstructor @Getter @Setter
 public class JsonObjectDifference {
 
-	private Logger logger = LoggerFactory.getLogger(JsonObjectDifference.class);
-	
 	private String key;
 	
 	private String objectValue;
@@ -27,16 +23,19 @@ public class JsonObjectDifference {
 	
 	private JsonObjectDifferenceType type;
 
+	
 	/**
 	 * @param type
 	 * @param key
 	 * @param value
 	 */
-	public JsonObjectDifference(JsonObjectDifferenceType type, String key, String objectValue, String objectComparedValue) {
-		this.key = key;
-		this.objectValue = objectValue;
-		this.objectComparedValue = objectComparedValue;	
+	public JsonObjectDifference(JsonObjectDifference copied) {
+		this.key = copied.getKey();
+		this.objectValue = copied.getObjectValue();
+		this.objectComparedValue = copied.getObjectComparedValue();
+		this.type = copied.getType();
 	}
+	
 	/**
 	 * @param type
 	 * @param key
@@ -44,5 +43,32 @@ public class JsonObjectDifference {
 	public JsonObjectDifference(JsonObjectDifferenceType type, String key) {
 		this.type = type;
 		this.key = key;
+	}
+	/**
+	 * @param key
+	 * @param objectValue
+	 * @param objectComparedValue
+	 * @param type
+	 */
+	public JsonObjectDifference(String key, String objectValue, String objectComparedValue,
+			JsonObjectDifferenceType type) {
+		super();
+		this.key = key;
+		this.objectValue = objectValue;
+		this.objectComparedValue = objectComparedValue;
+		this.type = type;
+	}
+
+	/**
+	 * @param keyFoundValueUnmatched
+	 * @param key2
+	 * @param innerKeyValue
+	 * @param comparableKeyValue
+	 */
+	public JsonObjectDifference(JsonObjectDifferenceType type, String key, String objectValue, String objectComparedValue) {
+		this.type = type;
+		this.key = key;
+		this.objectValue = objectValue;
+		this.objectComparedValue = objectComparedValue;
 	}
 }

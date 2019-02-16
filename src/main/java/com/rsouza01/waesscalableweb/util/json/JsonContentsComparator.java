@@ -21,32 +21,6 @@ public class JsonContentsComparator {
 	private String leftJsonContent; 
 	private String rightJsonContent; 
 
-	public JsonContentsComparison compare() {
-		
-		if((leftJsonContent == null && rightJsonContent == null) ||
-				leftJsonContent.equals(rightJsonContent)) {
-			return new JsonContentsComparison(JsonContentsResult.EQUAL_CONTENTS);
-		} 
-
-		if(leftJsonContent != null && rightJsonContent != null 
-				&& leftJsonContent.length() == rightJsonContent.length()
-				&& !leftJsonContent.equals(rightJsonContent)) {
-			return new JsonContentsComparison(JsonContentsResult.SAME_SIZES_BUT_DIFFERENT_CONTENTS);
-			
-		}
-		
-		JsonObject leftJsonObject = new JsonObject(leftJsonContent);
-		JsonObject rightJsonObject = new JsonObject(rightJsonContent);
-
-
-		List<JsonObjectDifference> leftDifferences = leftJsonObject.getDifferencesWith(rightJsonObject);
-		List<JsonObjectDifference> rightDifferences = rightJsonObject.getDifferencesWith(leftJsonObject);
-
-		return new JsonContentsComparison(JsonContentsResult.DIFFERENT_SIZES_CONTENTS, leftDifferences, rightDifferences);
-	}
-
-
-
 	/**
 	 * @param leftJsonContent
 	 * @param rightJsonContent
@@ -55,5 +29,46 @@ public class JsonContentsComparator {
 		super();
 		this.leftJsonContent = leftJsonContent;
 		this.rightJsonContent = rightJsonContent;
+	}
+
+	/**
+	 * This method compares the contents of the two json files provided via constructor.
+	 * @return {@code JsonContentsComparison}
+	 */
+	public JsonContentsComparison compare() {
+		
+		if((leftJsonContent == null && rightJsonContent == null) ||
+				leftJsonContent.equals(rightJsonContent)) {
+			
+			logger.debug("No differences found.");
+			
+			return new JsonContentsComparison(JsonContentsResult.EQUAL_CONTENTS);
+		} 
+
+		if(leftJsonContent != null && rightJsonContent != null 
+				&& leftJsonContent.length() == rightJsonContent.length()
+				&& !leftJsonContent.equals(rightJsonContent)) {
+
+			logger.debug("Inputs have the same size but different contents.");
+			
+			return new JsonContentsComparison(JsonContentsResult.SAME_SIZES_BUT_DIFFERENT_CONTENTS);
+		}
+
+		/** Here, we are aware that the contents are different. 
+		 * I am computing what those differences are. */
+		
+		JsonObject leftJsonObject = new JsonObject(leftJsonContent);
+		JsonObject rightJsonObject = new JsonObject(rightJsonContent);
+
+		List<JsonObjectDifference> leftDifferences = 
+				leftJsonObject.getDifferencesWith(rightJsonObject);
+		
+		List<JsonObjectDifference> rightDifferences = 
+				rightJsonObject.getDifferencesWith(leftJsonObject);
+
+		return new JsonContentsComparison(
+				JsonContentsResult.DIFFERENT_SIZES_CONTENTS, 
+				leftDifferences, 
+				rightDifferences);
 	}
 }

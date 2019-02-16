@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rsouza01.waesscalableweb.dto.DifferenceRequest;
@@ -64,20 +65,15 @@ public class DataDifferenceApiRestController {
 
 	@ApiOperation(value = "Endpoint that gets the differences between two panels identified by a transaction id")
 	@RequestMapping(value = "{transactionId}", method = RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<DifferenceResponse> difference(@PathVariable final String transactionId) {
 		
 		logger.info(String.format(differencelogMessage, transactionId));
-	
+
 		DataDifferenceResult dataDifferenceResult = service.difference(transactionId);
 		
-		DifferenceResponse differenceResponse = new DifferenceResponse("NOK", "", null);
+		DifferenceResponse differenceResponse = new DifferenceResponse(dataDifferenceResult);
 		
-		if(dataDifferenceResult != null) {
-			differenceResponse = new DifferenceResponse("OK", "Differences found", dataDifferenceResult.getDifferences());
-		} else {
-			differenceResponse = new DifferenceResponse("OK", "No Differences found", null);
-		}
-
 		return new ResponseEntity<DifferenceResponse>(differenceResponse, HttpStatus.OK);
 	}
 }

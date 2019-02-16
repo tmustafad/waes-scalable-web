@@ -54,7 +54,10 @@ public class DiffApiRestControllerTests {
 	    		.thenThrow(new TransactionIncompleteException("Two panels are needed (1 found)."));
 
 	    	String encodedString = 
-	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
+	    			String.format(
+	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
+	    					Base64.getEncoder().encodeToString(
+	    							WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 
 			content_post_request(transactionId, 
 					encodedString,
@@ -84,7 +87,10 @@ public class DiffApiRestControllerTests {
     		.thenReturn(null);
 
 	    	String encodedString = 
-	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
+	    			String.format(
+	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
+	    					Base64.getEncoder().encodeToString(
+	    							WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 	    	
 			content_post_request(transactionId, 
 					encodedString,
@@ -118,10 +124,16 @@ public class DiffApiRestControllerTests {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 
 	    	String encodedStringLeft = 
-	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_2.getBytes()));
+	    			String.format(
+	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
+	    					Base64.getEncoder().encodeToString(
+	    							WaesScalableWebApplicationConstants.JSON_STRING_2.getBytes()));
 
 	    	String encodedStringRight = 
-	    			String.format(WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(WaesScalableWebApplicationConstants.JSON_STRING_3.getBytes()));
+	    			String.format(
+	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
+	    					Base64.getEncoder().encodeToString(
+	    							WaesScalableWebApplicationConstants.JSON_STRING_3.getBytes()));
 	    	
 	    	when(service.difference(String.valueOf(transactionId)))
     		.thenReturn(new DataDifferenceResult());

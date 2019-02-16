@@ -10,9 +10,9 @@ import com.rsouza01.waesscalableweb.model.DataDifferenceEntry;
 import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
 import com.rsouza01.waesscalableweb.repository.DataDifferenceEntryRepository;
 import com.rsouza01.waesscalableweb.util.json.JsonContentsComparator;
+import com.rsouza01.waesscalableweb.util.json.JsonContentsComparison;
 
 import java.util.Base64;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,28 +28,18 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 	@Override
 	public void inputData(String transactionId, PanelSide side, String base64Content) {
 
-		Optional<DataDifferenceEntry> optionalDataDifferenceEntry = 
-				dataDifferenceEntryRepository.findById(transactionId);
+		DataDifferenceEntry dataDifferenceEntry = 
+				dataDifferenceEntryRepository
+					.findById(transactionId)
+					.orElse(new DataDifferenceEntry(transactionId));
 
-		DataDifferenceEntry dataDifferenceEntry = null;
-		
-		if(optionalDataDifferenceEntry.isPresent()) {
+		if(side == PanelSide.left) dataDifferenceEntry.setLeftContent(base64Content);
+		else dataDifferenceEntry.setRightContent(base64Content);
 			
-			dataDifferenceEntry = optionalDataDifferenceEntry.get();
-			
-			if(side == PanelSide.left) dataDifferenceEntry.setLeftContent(base64Content);
-			else dataDifferenceEntry.setRightContent(base64Content);
-			
-		} else {
-			dataDifferenceEntry = new DataDifferenceEntry(transactionId, side, base64Content);
-		}
-		
 		dataDifferenceEntryRepository.save(dataDifferenceEntry);
 
-		final String logMessage = "Transaction %s: InputData: left:'%s', right:'%s'";
-		
 		logger.info(String.format(
-				logMessage, dataDifferenceEntry.getTransactionId(),
+				"Transaction %s: InputData: left:'%s', right:'%s'", dataDifferenceEntry.getTransactionId(),
 				dataDifferenceEntry.getLeftContent(), dataDifferenceEntry.getRightContent()));
 	}	
 	
@@ -57,42 +47,36 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 	@Override
 	public DataDifferenceResult difference(String transactionId) throws TransactionIncompleteException {
 		
-		final String logMessage = "Transaction %s: Difference requested.";
+		logger.info(String.format("Transaction %s: Difference requested.", transactionId));
 		
-		logger.info(String.format(logMessage, transactionId));
-		
-		Optional<DataDifferenceEntry> optionalDataDifferenceEntry = 
-				dataDifferenceEntryRepository.findById(transactionId);
-		
-		DataDifferenceEntry dataDifferenceEntry = null;
-		
-		if(optionalDataDifferenceEntry.isPresent()) {
+		DataDifferenceEntry dataDifferenceEntry = 
+				dataDifferenceEntryRepository.findById(transactionId)
+				.orElseThrow(() -> 
+					new TransactionNotFoundException("No transaction found for the transactionId provided"));
+
+		if("".equals(dataDifferenceEntry.getLeftContent()) 
+				|| "".equals(dataDifferenceEntry.getRightContent())
+				|| dataDifferenceEntry.getLeftContent() == null 
+				|| dataDifferenceEntry.getRightContent() == null ) {
 			
-			dataDifferenceEntry = optionalDataDifferenceEntry.get();
-			
-			if("".equals(dataDifferenceEntry.getLeftContent()) 
-					|| "".equals(dataDifferenceEntry.getRightContent())
-					|| dataDifferenceEntry.getLeftContent() == null 
-					|| dataDifferenceEntry.getRightContent() == null ) {
-				
-				throw new TransactionIncompleteException("There are not enough content to compare.");
-			}
-			
-		} else {
-			throw new TransactionNotFoundException("No transaction found for the transactionId provided");
+			throw new TransactionIncompleteException("There are not enough content to compare.");
 		}
 
+		/** Basic tests performed. We are good to go .*/
 
-		/** We are good to go.*/
-
-		String leftPanelJSON = 
-				new String(Base64.getDecoder().decode(dataDifferenceEntry.getLeftContent()));
-		String rightPanelJSON = 
-				new String(Base64.getDecoder().decode(dataDifferenceEntry.getRightContent()));
-		
 		JsonContentsComparator jsonContentsComparator = 
-				new JsonContentsComparator(leftPanelJSON, rightPanelJSON);
+				new JsonContentsComparator(
+						new String(Base64.getDecoder().decode(dataDifferenceEntry.getLeftContent())), 
+						new String(Base64.getDecoder().decode(dataDifferenceEntry.getRightContent())));
+		
+		JsonContentsComparison jsonContentsComparison = 
+				jsonContentsComparator.compare();
 
-		return new DataDifferenceResult(jsonContentsComparator);
+		
+		return new DataDifferenceResult(
+				transactionId,
+				jsonContentsComparison.getResult(), 
+				jsonContentsComparison.getLeftDifferences(), 
+				jsonContentsComparison.getRightDifferences());
 	}
 }

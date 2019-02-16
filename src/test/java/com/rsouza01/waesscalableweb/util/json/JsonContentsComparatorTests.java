@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JsonContentsComparatorTests {
 
 	@Test
-	public void test_JsonContentsComparator_equal_contents_json() {
+	public void test_JsonContentsComparator_equal_contents() {
 
 		/** ARRANGE */
 		JsonContentsComparator jsonContentsComparator = 
@@ -31,8 +31,24 @@ public class JsonContentsComparatorTests {
 
 	}
 
-	//@Test
-	public void test_JsonContentsComparator_equal_size_different_contents_json() {
+	@Test
+	public void test_JsonContentsComparator_equal_size_different_contents() {
+
+		/** ARRANGE */
+		JsonContentsComparator jsonContentsComparator = 
+				new JsonContentsComparator(
+						WaesScalableWebApplicationConstants.JSON_STRING_4_1, 
+						WaesScalableWebApplicationConstants.JSON_STRING_4_2);
+		
+		/** ACT */
+		JsonContentsComparison jsonContentsComparison = jsonContentsComparator.compare();
+		
+		/** ASSERT */
+		assertThat(jsonContentsComparison.getResult()).isEqualTo(JsonContentsResult.SAME_SIZES_BUT_DIFFERENT_CONTENTS);
+	}
+
+	@Test
+	public void test_JsonContentsComparator_different_sizes_different_contents() {
 
 		/** ARRANGE */
 		JsonContentsComparator jsonContentsComparator = 
@@ -44,7 +60,8 @@ public class JsonContentsComparatorTests {
 		JsonContentsComparison jsonContentsComparison = jsonContentsComparator.compare();
 		
 		/** ASSERT */
-		assertThat(jsonContentsComparison.getResult()).isEqualTo(JsonContentsResult.SAME_SIZES_BUT_DIFFERENT_CONTENTS);
-
+		assertThat(jsonContentsComparison.getResult()).isEqualTo(JsonContentsResult.DIFFERENT_SIZES_CONTENTS);
+		assertThat(jsonContentsComparison.getLeftDifferences().size()).isEqualTo(3);
+		assertThat(jsonContentsComparison.getRightDifferences().size()).isEqualTo(2);
 	}
 }

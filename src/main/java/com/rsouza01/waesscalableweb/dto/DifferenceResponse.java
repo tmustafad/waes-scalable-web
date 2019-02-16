@@ -1,16 +1,36 @@
 package com.rsouza01.waesscalableweb.dto;
 
-import lombok.AllArgsConstructor;
+import com.rsouza01.waesscalableweb.enums.JsonContentsResult;
+import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
+import com.rsouza01.waesscalableweb.util.json.JsonObjectDifference;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class DifferenceResponse {
+@Getter @Setter
+public class DifferenceResponse  {
 
-    private String status;
+	protected String transactionId;
 
-    private String message;
-    
-	private String[] differences;
+	protected JsonContentsResult result;
+	
+	protected JsonObjectDifference[] leftDifferences;
+	protected JsonObjectDifference[] rightDifferences;
+
+	
+	/**
+	 * @param dataDifferenceResult
+	 */
+	public DifferenceResponse(DataDifferenceResult dataDifferenceResult) {
+		this.result = dataDifferenceResult.getResult();
+		this.transactionId = dataDifferenceResult.getTransactionId();
+
+		this.leftDifferences = dataDifferenceResult.getLeftDifferences().stream()
+			    .map(JsonObjectDifference::new)
+			    .toArray(JsonObjectDifference[]::new);
+
+		this.rightDifferences = dataDifferenceResult.getRightDifferences().stream()
+			    .map(JsonObjectDifference::new)
+			    .toArray(JsonObjectDifference[]::new);
+	}
 }

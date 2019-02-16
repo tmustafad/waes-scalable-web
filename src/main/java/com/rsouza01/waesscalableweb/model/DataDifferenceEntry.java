@@ -32,6 +32,11 @@ public class DataDifferenceEntry implements Serializable {
 
 	private String rightContent;
 
+	public DataDifferenceEntry(String transactionId) {
+		super();
+		this.transactionId = transactionId;
+	}
+
 	public DataDifferenceEntry(String transactionId, String leftContent, String rightContent) {
 		super();
 		
