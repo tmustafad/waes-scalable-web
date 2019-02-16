@@ -11,18 +11,18 @@ import org.springframework.http.HttpStatus;
  * @author rsouza
  *
  */
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class TransactionNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+public class TransactionIncompleteException extends RuntimeException {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1671833531728881764L;
+	private static final long serialVersionUID = 8457944544096855607L;
 
 	/**
 	 * @param arg0
 	 */
-	public TransactionNotFoundException(String message) {
+	public TransactionIncompleteException(String message) {
 		super(message);
 	}
 

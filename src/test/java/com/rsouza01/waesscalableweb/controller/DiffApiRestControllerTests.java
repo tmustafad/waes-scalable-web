@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Base64;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
@@ -18,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.rsouza01.waesscalableweb.enums.PanelSide;
+import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
 import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
 import com.rsouza01.waesscalableweb.service.DataDifferenceService;
@@ -36,10 +38,12 @@ public class DiffApiRestControllerTests {
 	private static final String DIFFERENCE_GET_ENDPOINT = "/v1/diff/{id}";
 	private static final String CONTENT_POST_ENDPOINT 	= "/v1/diff/{id}/{panel}";
 
-	private static final String JSON_DIFF_REQUEST 		= "{\"base64Content\":\"DIFF REQUEST\"}";
-	private static final String JSON_DIFF_REQUEST_LEFT 	= "{\"base64Content\":\"DIFF REQUEST LEFT\"}";
-	private static final String JSON_DIFF_REQUEST_RIGHT = "{\"base64Content\":\"DIFF REQUEST RIGHT\"}";
-
+	private static final String JSON_DIFF_REQUEST 		= "{\"base64Content\":\"%s\"}";
+	
+	private static final String JSON_STRING_1 = "{ \"name\":\"John\", \"age\":30, \"car\":null}";
+	private static final String JSON_STRING_2 = "{ \"name\":\"John\", \"age\":30, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\", \"car3\":\"Fiat\" } }";
+	private static final String JSON_STRING_3 = "{ \"name\":\"Ana\", \"age\":40, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\" } }";
+	
 	/**
 	 * Test method for the incomplete cycle request 
 	 * (i.e. only one panel uploaded before the difference endpoint be called)
@@ -52,14 +56,19 @@ public class DiffApiRestControllerTests {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 
 	    	when(service.difference(String.valueOf(transactionId)))
-	    		.thenThrow(new TransactionNotFoundException("Two panels are needed (1 found)."));
-	    	
-			content_post_request(transactionId, JSON_DIFF_REQUEST, PanelSide.left)
+	    		.thenThrow(new TransactionIncompleteException("Two panels are needed (1 found)."));
+
+	    	String encodedString = 
+	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_1.getBytes()));
+
+			content_post_request(transactionId, 
+					encodedString,
+					PanelSide.left)
 				.andExpect(status().isCreated());
 		
 			difference_get_request(transactionId)
 				//.andDo(print())
-				.andExpect(status().isNotFound())
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(jsonPath("message").value("Two panels are needed (1 found)."));
 
 		} catch (Exception e) {
@@ -79,10 +88,17 @@ public class DiffApiRestControllerTests {
 	    	when(service.difference(String.valueOf(transactionId)))
     		.thenReturn(null);
 
-			content_post_request(transactionId, JSON_DIFF_REQUEST, PanelSide.left)
+	    	String encodedString = 
+	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_1.getBytes()));
+	    	
+			content_post_request(transactionId, 
+					encodedString,
+					PanelSide.left)
 				.andExpect(status().isCreated());
 		
-			content_post_request(transactionId, JSON_DIFF_REQUEST, PanelSide.right)
+			content_post_request(transactionId, 
+					encodedString,
+					PanelSide.right)
 				.andExpect(status().isCreated());
 			
 			difference_get_request(transactionId)
@@ -105,14 +121,24 @@ public class DiffApiRestControllerTests {
 		
 		try {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
-			
+
+	    	String encodedStringLeft = 
+	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_2.getBytes()));
+
+	    	String encodedStringRight = 
+	    			String.format(JSON_DIFF_REQUEST, Base64.getEncoder().encodeToString(JSON_STRING_3.getBytes()));
+	    	
 	    	when(service.difference(String.valueOf(transactionId)))
     		.thenReturn(new DataDifferenceResult());
 
-	    	content_post_request(transactionId, JSON_DIFF_REQUEST_LEFT, PanelSide.left)
+	    	content_post_request(transactionId, 
+	    			encodedStringLeft,
+	    			PanelSide.left)
 				.andExpect(status().isCreated());
 			
-			content_post_request(transactionId, JSON_DIFF_REQUEST_RIGHT, PanelSide.right)
+			content_post_request(transactionId, 
+					encodedStringRight,
+					PanelSide.right)
 				.andExpect(status().isCreated());
 
 			difference_get_request(transactionId)
@@ -126,6 +152,28 @@ public class DiffApiRestControllerTests {
 			// TODO: handle exception
 		}
 		
+	}
+
+	/**
+	 * Straight to difference without upload any info. 
+	 */
+	@Test
+	public void transaction_not_found_request() {
+		
+		try {
+
+	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
+
+	    	when(service.difference(String.valueOf(transactionId)))
+	    		.thenThrow(new TransactionNotFoundException("No transaction found for the transactionId provided"));
+	    	
+			difference_get_request(transactionId)
+				//.andDo(print())
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("message").value("No transaction found for the transactionId provided"));
+
+		} catch (Exception e) {
+		}
 	}
 
 	/**

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity @Getter @Setter @NoArgsConstructor
+@Table(name = "data_difference_entry")
 public class DataDifferenceEntry implements Serializable {
 
 	/**
@@ -23,29 +25,29 @@ public class DataDifferenceEntry implements Serializable {
 	 */
 	private static final long serialVersionUID = 7535955528281487172L;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id = "";
-
+	@Id 
 	@NotNull
 	@Size(min=1, message="A transaction ID must be provided")
 	private String transactionId;
 	
-	@NotNull
-	private PanelSide panelSide;
+	private String leftContent;
 
-	@NotNull
-	@Size(min=1, message="The content must be provided")
-	private String content;
+	private String rightContent;
 
-	/**
-	 * @param transactionId
-	 * @param panelSide
-	 * @param content
-	 */
+	public DataDifferenceEntry(String transactionId, String leftContent, String rightContent) {
+		super();
+		
+		this.transactionId = transactionId;
+		this.leftContent = leftContent;
+		this.rightContent = rightContent;
+	}
+
 	public DataDifferenceEntry(String transactionId, PanelSide panelSide, String content) {
 		super();
+
 		this.transactionId = transactionId;
-		this.panelSide = panelSide;
-		this.content = content;
+		
+		if(panelSide == PanelSide.left) this.leftContent = content;
+		else this.rightContent = content;
 	}
 }

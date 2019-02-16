@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.rsouza01.waesscalableweb.dto.ErrorDetails;
+import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
 
 /**
@@ -51,6 +52,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	    return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
+
+	  @ExceptionHandler(TransactionIncompleteException.class)
+	  public final ResponseEntity<Object> handleTransactionIncompleteException(TransactionIncompleteException ex, WebRequest request) {
+
+		  ErrorDetails errorDetails = new ErrorDetails(
+				  new Date(), ex.getMessage(),
+				  request.getDescription(false));
+	    
+		  return new ResponseEntity<Object>(errorDetails, HttpStatus.UNPROCESSABLE_ENTITY);
+	  }	
 
 	  @ExceptionHandler(TransactionNotFoundException.class)
 	  public final ResponseEntity<Object> handleTransactionNotFoundException(TransactionNotFoundException ex, WebRequest request) {
