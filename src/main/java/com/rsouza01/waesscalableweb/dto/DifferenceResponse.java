@@ -25,12 +25,17 @@ public class DifferenceResponse  {
 		this.result = dataDifferenceResult.getResult();
 		this.transactionId = dataDifferenceResult.getTransactionId();
 
-		this.leftDifferences = dataDifferenceResult.getLeftDifferences().stream()
-			    .map(JsonObjectDifference::new)
-			    .toArray(JsonObjectDifference[]::new);
+		
+		if(dataDifferenceResult != null && dataDifferenceResult.getLeftDifferences() != null) {
+			this.leftDifferences = dataDifferenceResult.getLeftDifferences().stream()
+				    .map(JsonObjectDifference::new)
+				    .toArray(JsonObjectDifference[]::new);
+		}
 
-		this.rightDifferences = dataDifferenceResult.getRightDifferences().stream()
-			    .map(JsonObjectDifference::new)
-			    .toArray(JsonObjectDifference[]::new);
+		if(dataDifferenceResult != null && dataDifferenceResult.getRightDifferences() != null) {
+			this.rightDifferences = dataDifferenceResult.getRightDifferences().stream()
+				    .map(JsonObjectDifference::new)
+				    .toArray(JsonObjectDifference[]::new);
+		}
 	}
 }

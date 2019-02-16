@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.rsouza01.waesscalableweb.WaesScalableWebApplicationConstants;
+import com.rsouza01.waesscalableweb.enums.JsonContentsResult;
 import com.rsouza01.waesscalableweb.enums.PanelSide;
 import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
@@ -84,7 +85,11 @@ public class DiffApiRestControllerTests {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 			
 	    	when(service.difference(String.valueOf(transactionId)))
-    		.thenReturn(null);
+    		.thenReturn(
+    				new DataDifferenceResult(
+						String.valueOf(transactionId),
+						JsonContentsResult.EQUAL_CONTENTS,null, null)
+    				);
 
 	    	String encodedString = 
 	    			String.format(
@@ -105,8 +110,7 @@ public class DiffApiRestControllerTests {
 			difference_get_request(transactionId)
 				//.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("status").value("OK"))
-				.andExpect(jsonPath("message").value("No Differences found"));
+				.andExpect(jsonPath("result").value("EQUAL_CONTENTS"));
 			
 			
 		} catch (Exception e) {
@@ -123,6 +127,14 @@ public class DiffApiRestControllerTests {
 		try {
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 
+	    	when(service.difference(String.valueOf(transactionId)))
+    		.thenReturn(
+    				new DataDifferenceResult(
+						String.valueOf(transactionId),
+						JsonContentsResult.DIFFERENT_SIZES_CONTENTS, null, null)
+    				);
+
+	    	
 	    	String encodedStringLeft = 
 	    			String.format(
 	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
@@ -135,8 +147,6 @@ public class DiffApiRestControllerTests {
 	    					Base64.getEncoder().encodeToString(
 	    							WaesScalableWebApplicationConstants.JSON_STRING_3.getBytes()));
 	    	
-	    	when(service.difference(String.valueOf(transactionId)))
-    		.thenReturn(new DataDifferenceResult());
 
 	    	content_post_request(transactionId, 
 	    			encodedStringLeft,
@@ -151,8 +161,7 @@ public class DiffApiRestControllerTests {
 			difference_get_request(transactionId)
 				//.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("status").value("OK"))
-				.andExpect(jsonPath("message").value("Differences found"));
+				.andExpect(jsonPath("result").value("DIFFERENT_SIZES_CONTENTS"));
 			
 			
 		} catch (Exception e) {
