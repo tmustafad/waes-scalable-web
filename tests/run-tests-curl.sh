@@ -84,6 +84,11 @@ do
 	shift
 done
 
+if [ -z "$_API_ADDRESS" ]
+then
+	_API_ADDRESS="localhost:8080"
+fi
+
 clear
 
 printlncolor "\n\n__________________________________________________________________________________________________________"

@@ -71,17 +71,26 @@ For tests with POSTMAN, I provide the `WAES.postman_collection.json` and two env
 
 In the images bellow, the environment WAES-Heroku is selected and a POST request is made, uploading some base-64 content to the left panel, with transaction id = 1. 
 
-![Service up via docker image](postman_test.png)
-![Service up via docker image](postman_body.png)
+![Test with POSTMAN](postman_test.png)
+![Test with POSTMAN - POST request body](postman_body.png)
 
 And here we can see the successful response from the application
 ![Service up via docker image](postman_test_return.png)
 
 #### CURL Script
 
-For tests with CURL, I provide the `./tests/run-tests-curl.sh shell` script
+Finally, for tests with CURL, I provide the `./tests/run-tests-curl.sh shell` script, which reproduce the tests performed by the `mvn verify` command. The tests can be performed either locally or at Heroku, depending on the switch passed in the command line.
+
+For the Heroku tests, run `run-tests-curl.sh` with the `-e` switch (for `external`):
+
+```bash
+rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh -e
+```
+and for local tests, run with or without the `-l` switch (for `local`):
 
 ```bash
 rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh
 ```
+Bellow there is an example, where I show a POST request being made, the expected HTTP status and a received HTTP status.
 
+![cURL testes](curl_tests.png)
