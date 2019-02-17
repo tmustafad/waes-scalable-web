@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rsouza01.waesscalableweb.util.json;
 
 import java.util.List;
@@ -11,19 +8,25 @@ import org.slf4j.LoggerFactory;
 import com.rsouza01.waesscalableweb.enums.JsonContentsResult;
 
 /**
- * @author rsouza
+ * 
+ * @author Rodrigo Souza (rsouza01)
  *
  */
 public class JsonContentsComparator {
-	
+
+	/** Instance logger */
 	private Logger logger = LoggerFactory.getLogger(JsonContentsComparator.class);
 
+	/** Left panel content */
 	private String leftJsonContent; 
+
+	/** Right panel content */
 	private String rightJsonContent; 
 
 	/**
-	 * @param leftJsonContent
-	 * @param rightJsonContent
+	 * 
+	 * @param leftJsonContent Left panel content
+	 * @param rightJsonContent Right panel content
 	 */
 	public JsonContentsComparator(String leftJsonContent, String rightJsonContent) {
 		super();
@@ -32,7 +35,7 @@ public class JsonContentsComparator {
 	}
 
 	/**
-	 * This method compares the contents of the two json files provided via constructor.
+	 * This method compares the contents of the two JSON files provided via constructor.
 	 * @return {@code JsonContentsComparison}
 	 */
 	public JsonContentsComparison compare() {

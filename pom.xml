@@ -27,6 +27,10 @@
 
 		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
 
+        <docker.fileName>Dockerfile.yml</docker.fileName>
+		<docker.image.prefix>rsouza01</docker.image.prefix>
+		<docker.image.name>waes-scalable-web</docker.image.name>
+
 	</properties>
 
 	<dependencies>
@@ -134,6 +138,39 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.28.0</version>
+
+				<configuration>
+					<!--
+                    <dockerHost>http://127.0.0.1:2375</dockerHost>
+                    --> 
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+ 					
+                    <verbose>true</verbose>
+					<images>
+						<image>
+							<name>${docker.image.prefix}/${docker.image.name}</name>
+							<build>
+								<dockerFileDir>${project.basedir}</dockerFileDir>
+                                <dockerFile>${docker.fileName}</dockerFile>
+
+                                <!--copies artficact to docker build dir in target-->
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+			
 		</plugins>
 	</build>
 
