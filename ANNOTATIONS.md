@@ -8,13 +8,13 @@
 
 ## TODO
 
-  * tests (services)
-  * externalize strings
-  * application.properties with profiles
-  * -- comments/documentation-- 
-  * -- logging -- 
-  * -- heroku --
-  * -- shell CURL -- 
+* tests (services)
+* externalize strings
+* application.properties with profiles
+* -- comments/documentation-- 
+* -- logging -- 
+* -- heroku --
+* -- shell CURL -- 
 
 ## Test Stuff
 
