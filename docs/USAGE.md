@@ -77,6 +77,28 @@ In the images bellow, the environment WAES-Heroku is selected and a POST request
 And here we can see the successful response from the application
 ![Service up via docker image](postman_test_return.png)
 
+
+Here I give two strings that can be used for testing purposes:
+
+* String 1 
+```json
+{ \"name\":\"John\", \"age\":30, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\", \"car3\":\"Fiat\" } }
+```
+
+```json
+eyAibmFtZSI6IkpvaG4iLCAiYWdlIjozMCwgImNhcnMiOiB7ICJjYXIxIjoiRm9yZCIsICJjYXIyIjoiQk1XIiwgImNhcjMiOiJGaWF0IiB9IH0=
+```
+
+* String 2 
+
+```json
+{ \"name\":\"Ana\", \"age\":40, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\" } }
+```
+
+```json
+eyAibmFtZSI6IkFuYSIsICJhZ2UiOjQwLCAiY2FycyI6IHsgImNhcjEiOiJGb3JkIiwgImNhcjIiOiJCTVciIH0gfQ==
+```
+
 #### CURL Script
 
 Finally, for tests with CURL, I provide the `./tests/run-tests-curl.sh shell` script, which reproduce the tests performed by the `mvn verify` command. The tests can be performed either locally or at Heroku, depending on the switch passed in the command line.
@@ -93,4 +115,10 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh
 ```
 Bellow there is an example, where I show a POST request being made, the expected HTTP status and a received HTTP status.
 
-![cURL testes](curl_tests.png)
+![cURL tests](curl_tests.png)
+
+#### Swagger UI
+
+And of course, the Swagger user interface, where you can send parameters directly through the application.
+
+![Swagger UI](swagger-ui.png)
