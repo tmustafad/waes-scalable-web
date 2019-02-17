@@ -23,24 +23,21 @@ Independent of the way you choose to deploy and test the service (Docker, Maven 
 
 For the Heroku application, the following links are available:
 
-*[API Swagger documentation](https://waes-scalable-web.herokuapp.com/swagger-ui.html)
-*[Spring Boot Actuator - Health](https://waes-scalable-web.herokuapp.com/actuator/health)
-*[Spring Boot Actuator - Info](https://waes-scalable-web.herokuapp.com/actuator/info)
+* [API Swagger documentation](https://waes-scalable-web.herokuapp.com/swagger-ui.html)
+* [Spring Boot Actuator - Health](https://waes-scalable-web.herokuapp.com/actuator/health)
+* [Spring Boot Actuator - Info](https://waes-scalable-web.herokuapp.com/actuator/info)
 
 For the other deploy methods:
 
-*[API Swagger documentation](http://localhost:8080/swagger-ui.html)
-*[Spring Boot Actuator - Health](http://localhost:8080/actuator/health)
-*[Spring Boot Actuator - Info](http://localhost:8080/actuator/info)
-*[H2 - Database console](http://localhost:8080/h2-console/)
+* [API Swagger documentation](http://localhost:8080/swagger-ui.html)
+* [Spring Boot Actuator - Health](http://localhost:8080/actuator/health)
+* [Spring Boot Actuator - Info](http://localhost:8080/actuator/info)
+* [H2 - Database console](http://localhost:8080/h2-console/)
 
 
 #### Heroku
 
 Along with the source code and instructions to test the microservice, I am also providing an instance running on [Heroku](https://www.heroku.com/), at [https://waes-scalable-web.herokuapp.com/](https://waes-scalable-web.herokuapp.com/).
-
-The links bellow can be useful:
-
 
 #### Docker image
 
@@ -62,7 +59,8 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn spring-boot:run
 Test, build, package and run.
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar
+rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && \
+					   java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar
 ```
 
 ### Testing
