@@ -32,4 +32,8 @@ responsible	Tech Sourcer before	deadline.
 
 ## Development and Usage
 
-See my comments on the implementation [here](docs/COMMENTS.md.md) and my documentation [here](docs/USAGE.md).
+See my comments on the implementation [here](docs/COMMENTS.md) and my documentation [here](docs/USAGE.md).
+
+## Author
+
+**Rodrigo Alvares de Souza** - [rsouza01@gmail.com](rsouza01@gmail.com)

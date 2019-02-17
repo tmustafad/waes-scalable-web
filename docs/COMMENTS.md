@@ -1,35 +1,57 @@
-# WAES Assignment Scalable Web [![Build Status](https://travis-ci.org/rsouza01/waes-scalable-web.svg?branch=master)](https://travis-ci.org/rsouza01/waes-scalable-web) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d100b2c84f834615a0679e6e636817cd)](https://www.codacy.com/app/rsouza01/waes-scalable-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rsouza01/waes-scalable-web&amp;utm_campaign=Badge_Grade)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# Comments
 
-## GOAL
+## Architecture
 
-The goal of this assignment is to show your coding skills and what you value in software engineering. We value new ideas so next to the original requirement feel free to improve/add/extend.
-We evaluate the assignment depending on your role (Developer/Tester) and your level of seniority
+I did not try (and I did not have time) to invent anything fancy. I chose to use a vanilla implementation on my microservice, using the mainstream architecture found in countless books. So I structured my project as a stateless REST server, with the following structure:
 
-## The assignment
+* Rest controllers: microservice interface to the world. Responsible to process all system requests. 
+* Services: Business layers. Responsible to hold the business rules.
+* Repositories: JPA interfaces responsible for the persistence.
+* Model: JPA (and non JPA) entities that represent data in the microservice.
 
-- Provide 2 http endpoints that accepts JSON base64 encoded binary data on both endpoints
-	- <host>/v1/diff/<ID>/left and <host>/v1/diff/<ID>/right
-- The provided data needs to be diff-ed and the results shall be available on a third end point
-	- <host>/v1/diff/<ID>
-- The results shall provide the following info in JSON format
-	- If equal return that
-	- If not of equal size just return that
-	- If of same size provide insight in where the diffs are, actual diffs are not needed (So mainly offsets + length in the data)
-- Make assumptions in the implementation explicit, choices are good but need to be communicated
+And several auxiliary classes, as:
 
-## Must haves
-- Solution written in Java
-- Internal logic shall be under unit test
-- Functionality shall be under integration test
-- Documentation in code
-- Clear and to the point readme on usage
+* DTO: Almost POJO's responsible for the data delivery from the REST endpoints.
+* Enums: Enumerations with constants that make sense being grouped in a context (Difference result, difference types).
+* Exceptions: Some exception (not all) that could happen inside the business logic.
+* Util/Json: Classes responsible for the JSON difference.
 
-## Nice to haves
-- Suggestions for improvement
+## Technical Stack
+- Spring Boot 2
+- Java 8
+- H2 (in-memory database)
+- Maven 3
+- Swagger 2
 
-Please	upload	the	assignment	on	your	personal	GitHub	account	once	finished,	and	send	the	link	to	the	
-responsible	Tech Sourcer before	deadline.
+## System Requirements
+- JDK 8+
+- Maven 3.3+
 
-## Development and Usage
+## On the choice of the persistence layer 
 
-See my documentation [here](docs/USAGE.md)
+The preferential way to implement the persistence layer (in a production scenario) would be a more robust database(MongoDB, MySQL, etc). The H2 database were chosen because of its simplicity (no need for installation or use of a SaaS subscription/Docker compose solution for the demonstration). In my opinion the H2 database fits for our purpose.
+
+## Spring Actuator
+
+For security reasons, only the end points `health` and `info` are available. On a production environment these conditions can be relaxed, if using with Spring Boot Dataflow Server/Spring Boot Admin.
+
+## Improvements
+
+Lets start by the more obvious improvements:
+
+* A DELETE endpoint can be provided to purge transactions.
+* Use of a real-world database.
+
+Now some not-so obvious improvements:
+
+* Thinking on the horizontal scalability of the service, we know there is an amazing tool under the Spring Framework called Spring Cloud that provide some cloud design-patterns implementations which enables the application to scale seamlessly. So, for a robust and scalable implementation one can use Spring Eureka(Service discovery), Configuration Server, Zuul Server(API gateway), Spring Boot Admin and so on.
+* I am aware that some code I implemented on the project is old school. A better use of streams and lambdas, to name a few Java 8 features, would be nice to provide a better resource allocation by the JVM.   
+
+## What I did not have time to implement
+
+* Better logs
+* Services unit tests
+
+## And...
+
+I would like to thanks WAES for the opportunity. :-)

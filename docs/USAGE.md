@@ -14,8 +14,15 @@ Depending on which way you are using to test the microservice, some dependencies
 * [Postman](https://www.getpostman.com/)
 * [Java 1.8](https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Maven](https://maven.apache.org/install.html)
- 
+
 ### Server up and running
+
+Download a local copy of the project using the following command:
+
+```
+git clone https://github.com/rsouza01/waes-scalable-web.git
+```
+
 
 Independent of the way you choose to deploy and test the service (Docker, Maven Spring Boot plugin or packaged Java application), the final result must be like is shown at the image bellow.
 
@@ -64,6 +71,15 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && \
 ```
 
 ### Testing
+
+The following endpoints are available:
+
+URL | Method | Payload | Description
+--- | --- | --- | ---
+`<host>/v1/diff/<TRANSACTION_ID>/left` | POST | Left JSON Base64 content  | Processes and stores the left content
+`<host>/v1/diff/<TRANSACTION_ID>/right` | POST | Right JSON Base64 content | Processes and stores the right content
+`<host>/v1/diff/<TRANSACTION_ID>` | GET | - | Compares contents and returns how different the contents are.
+
 
 #### Postman
 
