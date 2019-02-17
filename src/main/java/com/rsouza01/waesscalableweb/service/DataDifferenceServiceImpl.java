@@ -17,25 +17,42 @@ import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Implementation of the {@code DataDifferenceService} interface.
+ * 
+ * It performs difference operations between two JSON-base64 formatted strings.
+ * 
+ * @author Rodrigo Souza (rsouza01)
+ *
+ */
 @Service
 public class DataDifferenceServiceImpl implements DataDifferenceService {
-
-	private Logger logger = LoggerFactory.getLogger(DataDifferenceServiceImpl.class);
 	
+	
+	/** Class logger */
+	private Logger logger = LoggerFactory.getLogger(DataDifferenceServiceImpl.class);
+
+	/** Data difference entry repository */
 	@Autowired
 	private DataDifferenceEntryRepository dataDifferenceEntryRepository;
 
+	/* (non-Javadoc)
+	 * @see com.rsouza01.waesscalableweb.service.DataDifferenceService#inputData(java.lang.String, com.rsouza01.waesscalableweb.enums.PanelSide, java.lang.String)
+	 */
 	@Override
 	public void inputData(String transactionId, PanelSide side, String base64Content) {
 
+		/** Either gets the entity from the persistence layer or creates a new one */
 		DataDifferenceEntry dataDifferenceEntry = 
 				dataDifferenceEntryRepository
 					.findById(transactionId)
 					.orElse(new DataDifferenceEntry(transactionId));
 
+		/** Tests which side we are saving. */
 		if(side == PanelSide.left) dataDifferenceEntry.setLeftContent(base64Content);
 		else dataDifferenceEntry.setRightContent(base64Content);
 			
+		/** Saves the data. */
 		dataDifferenceEntryRepository.save(dataDifferenceEntry);
 
 		logger.info(String.format(
@@ -44,16 +61,21 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 	}	
 	
 
+	/* (non-Javadoc)
+	 * @see com.rsouza01.waesscalableweb.service.DataDifferenceService#difference(java.lang.String)
+	 */
 	@Override
 	public DataDifferenceResult difference(String transactionId) throws TransactionIncompleteException {
 		
 		logger.info(String.format("Transaction %s: Difference requested.", transactionId));
 		
+		/** Try to find the entry on the persistence layer */
 		DataDifferenceEntry dataDifferenceEntry = 
 				dataDifferenceEntryRepository.findById(transactionId)
 				.orElseThrow(() -> 
 					new TransactionNotFoundException("No transaction found for the transactionId provided"));
 
+		/** Performs some basic checks */
 		if("".equals(dataDifferenceEntry.getLeftContent()) 
 				|| "".equals(dataDifferenceEntry.getRightContent())
 				|| dataDifferenceEntry.getLeftContent() == null 
@@ -69,6 +91,7 @@ public class DataDifferenceServiceImpl implements DataDifferenceService {
 						new String(Base64.getDecoder().decode(dataDifferenceEntry.getLeftContent())), 
 						new String(Base64.getDecoder().decode(dataDifferenceEntry.getRightContent())));
 		
+		/** Lets compare the contents */
 		JsonContentsComparison jsonContentsComparison = 
 				jsonContentsComparator.compare();
 

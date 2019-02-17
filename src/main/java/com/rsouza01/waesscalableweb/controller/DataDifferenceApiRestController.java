@@ -24,21 +24,43 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The main controller. It performs difference operations between
+ * two JSON-base64 formatted panels.
+ * 
+ * @author Rodrigo Souza (rsouza01)
+ *
+ */
 @Api(value = "Computes differences between base-64 data")
 @RestController
 @RequestMapping("v1/diff")
 public class DataDifferenceApiRestController {
 
+	/** Class logger */
 	private Logger logger = LoggerFactory.getLogger(DataDifferenceApiRestController.class);
 
 	@Autowired
+	/** Bean for data difference service*/
 	private DataDifferenceService service;
 
+	/** Log message for content upload */
 	public static final String contentUploadLogMessage = "Transaction %s: %s panel upload: %s";
+	
+	/** Log message for content upload error */
 	public static final String contentUploadErrorlogMessage = "Error for Transaction %s: %s panel upload: %s";
+
+	/** Log message for difference request */
 	public static final String differencelogMessage = "Transaction %s: Difference requested.";
 	
 
+	/**
+	 * Endpoint that uploads content for a specified side (left/right)
+	 * 
+	 * @param transactionId the transaction id for the operation
+	 * @param panelSide the panel side for the operation (left or right)
+	 * @param diffRequest the panel contents
+	 * @return HTTP Status 201 for a successful request or HTTP Status 400 for a invalid request.
+	 */
 	@ApiOperation(value = "Endpoint that uploads content for a specified side.")
 	@RequestMapping(value = "{transactionId}/{panelSide}", method = RequestMethod.POST)
 	public ResponseEntity<String> contentUpload(
@@ -63,6 +85,15 @@ public class DataDifferenceApiRestController {
 		}
 	}
 
+	/**
+	 * Endpoint that gets the differences between two panels identified by a transaction id
+	 * 
+	 * @param transactionId the transaction id for the operation
+	 * @return HTTP Status 200 for a successful request
+	 * 		   HTTP Status 422 if there is only one panel loaded or
+	 * 		   HTTP Status 404 if there is no panel loaded
+	 * .
+	 */
 	@ApiOperation(value = "Endpoint that gets the differences between two panels identified by a transaction id")
 	@RequestMapping(value = "{transactionId}", method = RequestMethod.GET)
 	@ResponseBody

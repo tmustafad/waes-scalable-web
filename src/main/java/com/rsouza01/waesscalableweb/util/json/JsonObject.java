@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rsouza01.waesscalableweb.util.json;
 
 import java.util.ArrayList;
@@ -9,23 +6,23 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.rsouza01.waesscalableweb.enums.JsonObjectDifferenceType;
 
-
 /**
- * @author rsouza
+ * Object that holds a JSON file. 
+ * 
+ * Extended from {@code JSONObject}, comparison functionalities added.
+ * 
+ * @author Rodrigo Souza (rsouza01)
  *
  */
 public class JsonObject extends JSONObject {
 
+	/** Path init for JsonPath*/
 	private static final String PATH_INIT = "$.";
-
-	private Logger logger = LoggerFactory.getLogger(JsonObject.class);
 
 	/**
 	 * @param json
@@ -69,8 +66,6 @@ public class JsonObject extends JSONObject {
 			
 		    String key = keys.next();
 		    
-		    logger.debug(String.format("%s = %s", key, innerJsonObject.get(key)));
-		    
 		    String compositeKey = parent.equals(JsonObject.PATH_INIT) ? JsonObject.PATH_INIT + key : parent + "." + key;
 		    
 		    if (innerJsonObject.get(key) instanceof JSONObject) {
@@ -90,7 +85,7 @@ public class JsonObject extends JSONObject {
 			    					JsonPath.read(comparableJsonObject.toString(), compositeKey));
 			    	
 				} catch (PathNotFoundException e) {
-				    logger.debug(String.format("Composite key %s not found.", compositeKey));
+					comparableKeyValue = null;
 				}
 
 		    	if(comparableKeyValue != null && !comparableKeyValue.isEmpty()) {

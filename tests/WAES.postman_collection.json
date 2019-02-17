@@ -18,15 +18,43 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\":\"DIFF REQUEST LEFT\"\n}"
+					"raw": "{\n\t\"base64Content\":\"eyAibmFtZSI6IkpvaG4iLCAiYWdlIjozMCwgImNhcnMiOiB7ICJjYXIxIjoiRm9yZCIsICJjYXIyIjoiQk1XIiwgImNhcjMiOiJGaWF0IiB9IH0=\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/diff/1/left",
-					"protocol": "http",
+					"raw": "{{url}}/v1/diff/1/left",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
+					"path": [
+						"v1",
+						"diff",
+						"1",
+						"left"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Left - Empty",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/diff/1/left",
+					"host": [
+						"{{url}}"
+					],
 					"path": [
 						"v1",
 						"diff",
@@ -50,15 +78,13 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\":\"DIFF REQUEST RIGHT\"\n}"
+					"raw": "{\n\t\"base64Content\":\"eyAibmFtZSI6IkFuYSIsICJhZ2UiOjQwLCAiY2FycyI6IHsgImNhcjEiOiJGb3JkIiwgImNhcjIiOiJCTVciIH0gfQ==\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/diff/1/right",
-					"protocol": "http",
+					"raw": "{{url}}/v1/diff/1/right",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"v1",
 						"diff",
@@ -85,12 +111,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/diff/1",
-					"protocol": "http",
+					"raw": "{{url}}/v1/diff/1",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "8080",
 					"path": [
 						"v1",
 						"diff",

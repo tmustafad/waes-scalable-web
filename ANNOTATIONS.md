@@ -10,6 +10,8 @@ application.properties with profiles
 logging
 tests (services)
 externalize strings
+heroku OK
+shell CURL
 
 
 
