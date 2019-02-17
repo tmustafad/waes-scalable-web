@@ -67,7 +67,15 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && \
 
 #### Postman
 
-For tests with POSTMAN, I provide the `WAES.postman_collection.json` file.
+For tests with POSTMAN, I provide the `WAES.postman_collection.json` and two environments at the `./tests` folder (`WAES-HEROKU.postman_environment.json` and `BOOT-LOCAL.postman_environment.json`), where I assume the user is able to import.
+
+In the images bellow, the environment WAES-Heroku is selected and a POST request is made, uploading some base-64 content to the left panel, with transaction id = 1. 
+
+![Service up via docker image](postman_test.png)
+![Service up via docker image](postman_body.png)
+
+And here we can see the successful response from the application
+![Service up via docker image](postman_test_return.png)
 
 #### CURL Script
 
