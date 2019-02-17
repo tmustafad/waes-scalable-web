@@ -1,4 +1,4 @@
-# WAES Assignment Scalable Web
+# WAES Assignment Scalable Web [![Build Status](https://travis-ci.org/rsouza01/waes-scalable-web.svg?branch=master)](https://travis-ci.org/rsouza01/waes-scalable-web) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## GOAL
 
@@ -37,3 +37,16 @@ responsible	Tech	Sourcer before	deadline.
 
 Swagger documentation: http://localhost:8080/swagger-ui.html
 H2 Console: http://localhost:8080/h2-console
+
+
+## Usage
+
+### Via Heroku
+
+Swagger-UI
+https://waes-scalable-web.herokuapp.com/swagger-ui.html
+
+
+Actuator
+https://waes-scalable-web.herokuapp.com/actuator/health
+https://waes-scalable-web.herokuapp.com/actuator/info
