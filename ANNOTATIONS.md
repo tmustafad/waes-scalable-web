@@ -8,13 +8,13 @@
 
 ## TODO
 
-* tests (services)
-* externalize strings
-* application.properties with profiles
-* -- comments/documentation-- 
-* -- logging -- 
-* -- heroku --
-* -- shell CURL -- 
+  * tests (services)
+  * externalize strings
+  * application.properties with profiles
+  * -- comments/documentation-- 
+  * -- logging -- 
+  * -- heroku --
+  * -- shell CURL -- 
 
 ## Test Stuff
 
@@ -23,7 +23,7 @@
 { \"name\":\"John\", \"age\":30, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\", \"car3\":\"Fiat\" } }
 ```
 
-```
+```json
 eyAibmFtZSI6IkpvaG4iLCAiYWdlIjozMCwgImNhcnMiOiB7ICJjYXIxIjoiRm9yZCIsICJjYXIyIjoiQk1XIiwgImNhcjMiOiJGaWF0IiB9IH0=
 ```
 
@@ -33,6 +33,6 @@ eyAibmFtZSI6IkpvaG4iLCAiYWdlIjozMCwgImNhcnMiOiB7ICJjYXIxIjoiRm9yZCIsICJjYXIyIjoi
 { \"name\":\"Ana\", \"age\":40, \"cars\": { \"car1\":\"Ford\", \"car2\":\"BMW\" } }
 ```
 
-```
+```json
 eyAibmFtZSI6IkFuYSIsICJhZ2UiOjQwLCAiY2FycyI6IHsgImNhcjEiOiJGb3JkIiwgImNhcjIiOiJCTVciIH0gfQ==
 ```
