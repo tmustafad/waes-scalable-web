@@ -1,0 +1,9 @@
+FROM openjdk:8u121-jre-alpine 
+
+ADD target/waes-scalable-web-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/waes-scalable-web.jar
+
+ENTRYPOINT ["/usr/bin/java"]
+
+CMD ["-jar", "/opt/spring-cloud/lib/waes-scalable-web.jar"]
+
+EXPOSE 8080
