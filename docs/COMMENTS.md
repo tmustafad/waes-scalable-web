@@ -29,7 +29,11 @@ And several auxiliary classes, as:
 
 ## On the choice of the persistence layer 
 
-The preferential way to implement the persistence layer (in a production scenario) would be a more robust database(MongoDB, MySQL, etc). The H2 database were chosen because of its simplicity (no need for installation or use of a SaaS subscription/Docker compose solution for the demonstration). In my opinion the H2 database fits for our purpose.
+The preferential way to implement the persistence layer (in a production scenario) would be a more robust database(MongoDB, MySQL, etc). The H2 database were chosen because of its simplicity (no need for installation or use of a SaaS subscription/Docker compose solution for the demonstration). In my opinion the H2 database fits our purpose.
+
+## On the choice of the Difference response
+
+I felt that, instead of saying "the data has the same size and are both equal" or "the data is different", it would be much nicer to say "The left content has X just like the right content, but for the left the value is A and for the right the value is B", or "the left content has X and Y, but the right has only Z", so I kind of implemented in this way. :-) 
 
 ## Spring Actuator
 
