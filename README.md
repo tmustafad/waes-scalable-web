@@ -5,7 +5,6 @@
 The goal of this assignment is to show your coding skills and what you value in software engineering. We value new ideas so next to the original requirement feel free to improve/add/extend.
 We evaluate the assignment depending on your role (Developer/Tester) and your level of seniority
 
-
 ## The assignment
 
 - Provide 2 http endpoints that accepts JSON base64 encoded binary data on both endpoints
@@ -17,7 +16,6 @@ We evaluate the assignment depending on your role (Developer/Tester) and your le
 	- If not of equal size just return that
 	- If of same size provide insight in where the diffs are, actual diffs are not needed (So mainly offsets + length in the data)
 - Make assumptions in the implementation explicit, choices are good but need to be communicated
-
 
 ## Must haves
 - Solution written in Java
@@ -32,12 +30,11 @@ We evaluate the assignment depending on your role (Developer/Tester) and your le
 Please	upload	the	assignment	on	your	personal	GitHub	account	once	finished,	and	send	the	link	to	the	
 responsible	Tech	Sourcer before	deadline.
 
-
 ## Project Info
 
-Swagger documentation: http://localhost:8080/swagger-ui.html
-H2 Console: http://localhost:8080/h2-console
+[Swagger documentation](http://localhost:8080/swagger-ui.html)
 
+[H2 Console](http://localhost:8080/h2-console)
 
 ## Usage
 
@@ -51,20 +48,13 @@ For tests with POSTMAN, I provide the WAES.postman_collection.json file.
 
 For tests with CURL, I provide the run-tests-curl.sh shell script.
 
-
-
 #### Via Heroku
 
-Swagger-UI
-https://waes-scalable-web.herokuapp.com/swagger-ui.html
+[Swagger documentation](https://waes-scalable-web.herokuapp.com/swagger-ui.html)
 
-
-Actuator
-https://waes-scalable-web.herokuapp.com/actuator/health
-https://waes-scalable-web.herokuapp.com/actuator/info
+[Actuator - Health](https://waes-scalable-web.herokuapp.com/actuator/health)
+[Actuator - Info](https://waes-scalable-web.herokuapp.com/actuator/info)
 
 #### Via command line
 
 mvn spring-boot:run
-
-

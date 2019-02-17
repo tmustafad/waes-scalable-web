@@ -21,9 +21,6 @@ SERVER_NAME=waes-scalable-web
 SERVER_PORT=8080
 IMG_TAG=latest
 
-# Environment settings
-PORT_CONTAINER=8080
-PORT_HOST=8080
 
 _HEADER="[INFO] ========================================================================"
 _USE_MESSAGE="
