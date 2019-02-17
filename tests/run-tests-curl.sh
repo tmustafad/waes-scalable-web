@@ -144,7 +144,7 @@ echo
 
 _TRANSACTION_ID=2
 printlncolorERROR '----------------------------------------------------------------------------------------------------------'
-printlncolorERROR 'Invalid input - TRYING TO GET DIFFERENCE WITH ONLY ONE PANEL LOADED - Transaction Id = ${_TRANSACTION_ID}'
+printlncolorERROR "Invalid input - TRYING TO GET DIFFERENCE WITH ONLY ONE PANEL LOADED - Transaction Id = ${_TRANSACTION_ID}"
 printlncolorERROR '----------------------------------------------------------------------------------------------------------'
 
 printlncolor '----------------------------------------------------------------------------------------------------------'
