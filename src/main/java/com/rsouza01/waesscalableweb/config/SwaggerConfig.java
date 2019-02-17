@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+import springfox.documentation.service.Contact;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -51,6 +52,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 				.version("1.0.0")
 				.license("MIT License")
 				.licenseUrl("https://opensource.org/licenses/MIT\"")
+                .contact(new Contact("Rodrigo Souza", "http://rodrigosouza.net.br", "rsouza01@gmail.com"))
 				.build();
 	}
 

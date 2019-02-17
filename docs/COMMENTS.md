@@ -55,6 +55,7 @@ Now some not-so obvious improvements:
 
 * Better logs
 * Services unit tests
+* To test more variations of the JSON inputs.
 
 ## And...
 
