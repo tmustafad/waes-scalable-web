@@ -24,6 +24,9 @@
 		<org.json.version>20180813</org.json.version>
 		<!-- com.jayway.jsonpath -->
 		<com.jayway.jsonpath.version>2.4.0</com.jayway.jsonpath.version>
+
+		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
+
 	</properties>
 
 	<dependencies>
@@ -85,6 +88,45 @@
 		</dependency>
 
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>heroku</id>
+			<activation>
+				<property>
+					<name>heroku</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.heroku.sdk</groupId>
+						<artifactId>heroku-maven-plugin</artifactId>
+						<version>1.1.1</version>
+						<configuration>
+							<appName>waes-scalable-web</appName>
+							<includeTarget>false</includeTarget>
+							<includes>
+								<include>${full-artifact-name}</include>
+							</includes>
+							<jdkVersion>1.8</jdkVersion>
+							<processTypes>
+								<web>java $JAVA_OPTS -jar ${full-artifact-name} --spring.profiles.active=heroku</web>
+							</processTypes>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
