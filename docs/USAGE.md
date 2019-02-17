@@ -2,7 +2,7 @@
 
 ## Project Info
 
-It was a great pleasure for me to develop this microservice. Here I provide saveral ways to test it.
+It was a great pleasure for me to develop this microservice. Here I provide several ways to test it.
 
 ### Prerequisites
 
@@ -41,7 +41,7 @@ Along with the source code and instructions to test the microservice, I am also 
 
 #### Docker image
 
-For testing with Docker, one has to open a terminal window at the ./tests folder, and run the script provided. The script publish-server-mvn.sh will perform the tests, package, generate and run the microservice  docker image at the port 8080.
+For testing with Docker, one has to open a terminal window at the `./tests` folder, and run the script provided. The script `publish-server-mvn.sh` will perform the tests, package, generate and run the microservice docker image at the port 8080.
 
 ```bash
 rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/publish-server-mvn.sh
@@ -67,11 +67,11 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && \
 
 #### Postman
 
-For tests with POSTMAN, I provide the WAES.postman_collection.json file.
+For tests with POSTMAN, I provide the `WAES.postman_collection.json` file.
 
 #### CURL Script
 
-For tests with CURL, I provide the run-tests-curl.sh shell script at the ./tests folder
+For tests with CURL, I provide the `./tests/run-tests-curl.sh shell` script
 
 ```bash
 rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh
