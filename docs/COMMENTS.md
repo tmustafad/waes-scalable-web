@@ -39,7 +39,7 @@ Another implementation design I have chosen was to calculate the difference each
 
 ## On the use of python_case_function_names instead of camelCaseFunctionNames for Testing Functions
 
-Personal tast, pure and simple. I think it's more readable and meaningful test functions with python case.  
+Personal taste, pure and simple. I think it's more readable and meaningful test functions with python case.  
 
 
 ## Spring Actuator
