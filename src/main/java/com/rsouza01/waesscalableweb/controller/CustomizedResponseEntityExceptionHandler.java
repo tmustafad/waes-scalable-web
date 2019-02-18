@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.rsouza01.waesscalableweb.dto.ErrorDetails;
 import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
+import com.rsouza01.waesscalableweb.exception.InvalidJSONFormatException;
 
 /**
  * Customized validation scheme for API inputs.
@@ -80,6 +81,22 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 				request.getDescription(false));
 
 		return new ResponseEntity<Object>(errorDetails, HttpStatus.UNPROCESSABLE_ENTITY);
+	}	
+
+	/**
+	 * Handles invalid Difference requests (only one panel)
+	 * @param ex Exception thrown
+	 * @param request the request
+	 * @return A response entity with the info
+	 */
+	@ExceptionHandler(InvalidJSONFormatException.class)
+	public final ResponseEntity<Object> handleInvalidJSONFormatException(InvalidJSONFormatException ex, WebRequest request) {
+
+		ErrorDetails errorDetails = new ErrorDetails(
+				new Date(), ex.getMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST);
 	}	
 
 	/**

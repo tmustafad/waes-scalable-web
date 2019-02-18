@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.rsouza01.waesscalableweb.WaesScalableWebApplicationConstants;
 import com.rsouza01.waesscalableweb.enums.JsonContentsResult;
 import com.rsouza01.waesscalableweb.enums.PanelSide;
+import com.rsouza01.waesscalableweb.exception.InvalidJSONFormatException;
 import com.rsouza01.waesscalableweb.exception.TransactionIncompleteException;
 import com.rsouza01.waesscalableweb.exception.TransactionNotFoundException;
 import com.rsouza01.waesscalableweb.model.DataDifferenceResult;
@@ -40,6 +41,37 @@ public class DiffApiRestControllerTests {
 	private static final String DIFFERENCE_GET_ENDPOINT = "/v1/diff/{id}";
 	private static final String CONTENT_POST_ENDPOINT 	= "/v1/diff/{id}/{panel}";
 
+	/**
+	 * Test method for a invalid JSON format 
+	 */
+	@Test
+	public void invalid_JSON_content_request() {
+		try {
+			
+			/** ARRANGE */
+	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
+
+	    	String encodedString = 
+	    			String.format(
+	    					WaesScalableWebApplicationConstants.JSON_DIFF_REQUEST, 
+	    					Base64.getEncoder().encodeToString(
+	    							WaesScalableWebApplicationConstants.JSON_INVALID.getBytes()));
+	    	
+	    	PanelSide side = PanelSide.left;
+	    	
+	    	when(service.inputData(String.valueOf(transactionId), side, encodedString))
+    		.thenThrow(new InvalidJSONFormatException("The content is not in a valid JSON format."));
+
+	    	/** ACT & ASSERT */
+			content_post_request(transactionId, 
+					encodedString,
+					side)
+				.andExpect(status().isCreated());
+			
+		} catch (Exception e) {
+		}
+	}
+	
 	/**
 	 * Test method for the incomplete cycle request 
 	 * (i.e. only one panel uploaded before the difference endpoint be called)
@@ -203,7 +235,9 @@ public class DiffApiRestControllerTests {
 	 */
 	public ResultActions difference_get_request(int transactionId) throws Exception {
 		
-        return mockMvc.perform(get(DiffApiRestControllerTests.DIFFERENCE_GET_ENDPOINT, String.valueOf(transactionId))
+        return mockMvc.perform(get(
+        		DiffApiRestControllerTests.DIFFERENCE_GET_ENDPOINT, 
+        		String.valueOf(transactionId))
         		.contentType(MediaType.APPLICATION_JSON));
         
 	}

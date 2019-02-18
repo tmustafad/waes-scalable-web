@@ -2,6 +2,7 @@ package com.rsouza01.waesscalableweb.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+
 import java.util.Base64;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -32,8 +33,7 @@ public class DataDifferenceServiceTests {
 	@MockBean
 	private DataDifferenceEntryRepository dataRepository;
 	
-
-	/**
+		/**
 	 * Test method for the incomplete cycle request 
 	 * (i.e. only one panel uploaded before the difference endpoint be called)
 	 */

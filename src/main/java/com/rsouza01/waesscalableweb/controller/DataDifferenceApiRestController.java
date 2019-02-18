@@ -68,21 +68,11 @@ public class DataDifferenceApiRestController {
 			@PathVariable(value = "panelSide") final PanelSide panelSide,
 			@Valid @RequestBody final DifferenceRequest diffRequest) {
 
-		try {
-
-			logger.info(String.format(contentUploadLogMessage, transactionId, panelSide, diffRequest.getBase64Content()));
-
-			service.inputData(transactionId, panelSide, diffRequest.getBase64Content());
-
-			return new ResponseEntity<>(HttpStatus.CREATED);
-
-		} catch (Exception e) {
-			logger.error(
-					String.format(contentUploadErrorlogMessage, transactionId, panelSide, diffRequest.getBase64Content()), 
-					e);
-
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info(String.format(contentUploadLogMessage, transactionId, panelSide, diffRequest.getBase64Content()));
+		
+		service.inputData(transactionId, panelSide, diffRequest.getBase64Content());
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	/**
