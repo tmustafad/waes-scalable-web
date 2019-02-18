@@ -1,3 +1,6 @@
 language: java
 jdk: oraclejdk8
 script: HEROKU_API_KEY="$HEROKU_API_KEY" mvn clean verify -Pheroku
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
