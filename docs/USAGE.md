@@ -51,14 +51,14 @@ Along with the source code and instructions to test the microservice, I am also 
 For testing with Docker, one has to open a terminal window at the `./tests` folder, and run the script provided. The script `publish-server-mvn.sh` will perform the tests, package, generate and run the microservice docker image at the port 8080.
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/publish-server-mvn.sh
+$ <PROJECT_FOLDER>/tests/publish-server-mvn.sh
 ```
 #### Maven Plugin
 
 For testing with Maven, one has to open a terminal window at the project root folder, and run 
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn spring-boot:run
+$ <PROJECT_FOLDER>/mvn spring-boot:run
 ```
 
 #### Command line Java packaged application
@@ -66,8 +66,7 @@ rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn spring-boot:run
 Test, build, package and run.
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/mvn clean install && \
-					   java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar
+$ <PROJECT_FOLDER>/mvn clean install && java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar
 ```
 
 ### Testing
@@ -122,12 +121,12 @@ Finally, for tests with CURL, I provide the `./tests/run-tests-curl.sh shell` sc
 For the Heroku tests, run `run-tests-curl.sh` with the `-e` switch (for `external`):
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh -e
+$ <PROJECT_FOLDER>/tests/run-tests-curl.sh -e
 ```
 and for local tests, run with or without the `-l` switch (for `local`):
 
 ```bash
-rsouza@VYCanisMajoris: $ ~/Projecten/waes-scalable-web/tests/run-tests-curl.sh
+$ <PROJECT_FOLDER>/tests/run-tests-curl.sh
 ```
 Bellow there is an example, where I show a POST request being made, the expected HTTP status and a received HTTP status.
 
