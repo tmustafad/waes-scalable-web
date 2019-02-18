@@ -249,6 +249,21 @@ printlncolor "Expected HTTP STATUS: 404 (NOT FOUND)"
 printlncolor '----------------------------------------------------------------------------------------------------------'
 curl -i -H "Content-Type: application/json" -X GET ${_API_ADDRESS}/v1/diff/${_TRANSACTION_ID}
 
+echo
+echo
+
+_TRANSACTION_ID=6
+printlncolor '----------------------------------------------------------------------------------------------------------'
+printlncolor "Invalid input - right panel - Transaction Id = ${_TRANSACTION_ID}"
+printlncolor "Endpoint: ${_API_ADDRESS}/v1/diff/${_TRANSACTION_ID}/right"
+printlncolor "Expected HTTP STATUS: 400 (BAD REQUEST)"
+printlncolor '----------------------------------------------------------------------------------------------------------'
+curl -i --data \
+	'{"base64Content":"eyAibmFtZSI6LCAiYWdlIjozNSwgIiI6ICAiY2FyMSI6IkZvcmQiLCAiY2FyMiI6IkJNVyIsICJjYQ==" }' \
+	-H "Content-Type: application/json" -X POST ${_API_ADDRESS}/v1/diff/${_TRANSACTION_ID}/right
+echo
+
+
 
 echo
 echo
