@@ -53,17 +53,20 @@ Lets start by the more obvious improvements:
 * A DELETE endpoint can be provided to purge transactions.
 * Use of a real-world database.
 * The project could be better organized using multiple pom.xml modules (https://maven.apache.org/guides/mini/guide-multiple-modules.html), i.e. a module for the Rest controllers and DTOs, another module for the JsonObjects, and so on.
+* Increase the code coverage (I am using codecov.io).
+* Different profiles for dev, testing and production environments.
+* Internationalization (mainly the messages).
+* A nice front-end for better testing.
 
 Now some not-so obvious improvements:
 
 * Thinking on the horizontal scalability of the service, we know there is an amazing tool under the Spring Framework called Spring Cloud that provide some cloud design-patterns implementations which enables the application to scale seamlessly. So, for a robust and scalable implementation one can use Spring Eureka(Service discovery), Configuration Server, Zuul Server(API gateway), Spring Boot Admin and so on.
-* I am aware that some code I implemented on the project is old school. A better use of streams and lambdas, to name a few Java 8 features, would be nice to provide a better resource allocation by the JVM.   
+* I am aware that some code I implemented on the project is old school. A better use of streams and lambdas, to name a few Java 8 features, would be nice to provide a better resource allocation and performance by the JVM.   
 * For bigger sets of data (i.e. large JSON inputs), a queue service (RabbitMQ, AWS SQS, ActiveMQ, etc) can enter the game, in order to speed the response times.
 
 ## What I did not have time to implement
 
 * Better logs
-* Services unit tests
 * To test more variations of the JSON inputs.
 
 ## And...
