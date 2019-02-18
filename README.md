@@ -1,4 +1,7 @@
-# WAES Assignment Scalable Web [![Build Status](https://travis-ci.org/rsouza01/waes-scalable-web.svg?branch=master)](https://travis-ci.org/rsouza01/waes-scalable-web) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d100b2c84f834615a0679e6e636817cd)](https://www.codacy.com/app/rsouza01/waes-scalable-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rsouza01/waes-scalable-web&amp;utm_campaign=Badge_Grade)[![codecov](https://codecov.io/gh/rsouza01/waes-scalable-web/branch/master/graph/badge.svg)](https://codecov.io/gh/rsouza01/waes-scalable-web)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# WAES Assignment Scalable Web 
+
+
+[![Build Status](https://travis-ci.org/rsouza01/waes-scalable-web.svg?branch=master)](https://travis-ci.org/rsouza01/waes-scalable-web) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d100b2c84f834615a0679e6e636817cd)](https://www.codacy.com/app/rsouza01/waes-scalable-web?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rsouza01/waes-scalable-web&amp;utm_campaign=Badge_Grade)[![codecov](https://codecov.io/gh/rsouza01/waes-scalable-web/branch/master/graph/badge.svg)](https://codecov.io/gh/rsouza01/waes-scalable-web)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## GOAL
 
