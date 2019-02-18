@@ -5,7 +5,7 @@
 I did not try (and I did not have time) to invent anything fancy. I chose to use a vanilla implementation on my microservice, using the mainstream architecture found in countless books. So I structured my project as a stateless REST server, with the following structure:
 
 * Rest controllers: microservice interface to the world. Responsible to process all system requests. 
-* Services: Business layers. Responsible to hold the business rules.
+* Services: Business layers. Responsible to hold the business logic.
 * Repositories: JPA interfaces responsible for the persistence.
 * Model: JPA (and non JPA) entities that represent data in the microservice.
 
