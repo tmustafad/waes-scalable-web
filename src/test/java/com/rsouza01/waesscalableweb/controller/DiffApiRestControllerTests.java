@@ -49,6 +49,7 @@ public class DiffApiRestControllerTests {
 		
 		try {
 
+			/** ARRANGE */
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 
 	    	when(service.difference(String.valueOf(transactionId)))
@@ -60,7 +61,8 @@ public class DiffApiRestControllerTests {
 	    					Base64.getEncoder().encodeToString(
 	    							WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 
-			content_post_request(transactionId, 
+			/** ACT & ASSERT */
+	    	content_post_request(transactionId, 
 					encodedString,
 					PanelSide.left)
 				.andExpect(status().isCreated());
@@ -82,6 +84,7 @@ public class DiffApiRestControllerTests {
 		
 		try {
 			
+			/** ARRANGE */
 	    	int transactionId = ThreadLocalRandom.current().nextInt(1, 1000);
 			
 	    	when(service.difference(String.valueOf(transactionId)))
@@ -97,6 +100,7 @@ public class DiffApiRestControllerTests {
 	    					Base64.getEncoder().encodeToString(
 	    							WaesScalableWebApplicationConstants.JSON_STRING_1.getBytes()));
 	    	
+			/** ACT & ASSERT */
 			content_post_request(transactionId, 
 					encodedString,
 					PanelSide.left)
@@ -114,7 +118,6 @@ public class DiffApiRestControllerTests {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 	
@@ -165,7 +168,6 @@ public class DiffApiRestControllerTests {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 	}
