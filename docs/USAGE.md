@@ -58,7 +58,7 @@ $ <PROJECT_FOLDER>/tests/publish-server-mvn.sh
 For testing with Maven, one has to open a terminal window at the project root folder, and run 
 
 ```bash
-$ <PROJECT_FOLDER>/mvn spring-boot:run
+$ <PROJECT_FOLDER>/mvn spring-boot:run -Dspring.profiles.active=dev
 ```
 
 #### Command line Java packaged application
@@ -66,7 +66,7 @@ $ <PROJECT_FOLDER>/mvn spring-boot:run
 Test, build, package and run.
 
 ```bash
-$ <PROJECT_FOLDER>/mvn clean install && java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar
+$ <PROJECT_FOLDER>/mvn clean install && java -jar target/waes-scalable-web-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=dev
 ```
 
 ### Testing
